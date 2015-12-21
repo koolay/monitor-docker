@@ -21,3 +21,13 @@ telegraf:
      - ./telegraf.toml:/config/telegraf.toml
     links:
      - influxdb
+
+grafana:
+  image: daocloud.io/koolay/grafana:latest
+  links:
+   - influxdb
+  ports:
+   - "3000:3000"
+  environment:
+   - GF_SERVER_ROOT_URL=http://influxdb
+   - GF_SECURITY_ADMIN_PASSWORD=dev

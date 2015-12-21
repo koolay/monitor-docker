@@ -40,9 +40,9 @@
   flush_jitter = "0s"
 
   # Run telegraf in debug mode
-  debug = false
+  debug = true
   # Override default hostname, if empty use os.Hostname()
-  hostname = ""
+  hostname = "dev.myapp.com"
 
 
 ###############################################################################
@@ -102,7 +102,6 @@
   # Mountpoints=["/"]
 
 # Read metrics about docker containers
-[[plugins.docker]]
   # no configuration
 
 # Read metrics about disk IO by device
