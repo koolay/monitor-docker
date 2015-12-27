@@ -10,17 +10,18 @@ influxdb:
     expose:
      - "4444"
     ports:
+    - "4444:4444"
     - "8083:8083"
     - "8086:8086"
     volumes_from:
      - influxdb_data
 
-telegraf:
-    image: daocloud.io/koolay/telegraf:latest
-    volumes:
-     - ./telegraf.toml:/config/telegraf.toml
-    links:
-     - influxdb
+#telegraf:
+    #image: daocloud.io/koolay/telegraf:latest
+    #volumes:
+     #- ./telegraf.toml:/config/telegraf.toml
+    #links:
+     #- influxdb
 
 grafana:
   image: daocloud.io/koolay/grafana:latest
@@ -31,3 +32,21 @@ grafana:
   environment:
    - GF_SERVER_ROOT_URL=http://influxdb
    - GF_SECURITY_ADMIN_PASSWORD=dev
+
+logstash:
+   #image: daocloud.io/koolay/logstash:latest
+   image: koolay/logstash
+   ports:
+     - "5043:5043"
+   links:
+    - influxdb
+   volumes:
+    - ./ssl:/etc/logstash/ssl
+
+filebeat:
+    image: koolay/filebeat
+    links:
+     - "logstash"
+    volumes:
+     - ./ssl:/etc/ssl
+     - /home/hwl/git/php-dev-docker/data:/data
