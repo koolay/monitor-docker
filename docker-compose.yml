@@ -34,17 +34,18 @@ grafana:
    - GF_SECURITY_ADMIN_PASSWORD=dev
 
 logstash:
-   #image: daocloud.io/koolay/logstash:latest
-   image: koolay/logstash
+   image: daocloud.io/koolay/logstash:latest
+   #image: koolay/logstash
    ports:
      - "5043:5043"
    links:
     - influxdb
    volumes:
     - ./ssl:/etc/logstash/ssl
+    - ./conf/logstash:/etc/logstash
 
 filebeat:
-    image: koolay/filebeat
+    image: daocloud.io/koolay/filebeat:latest
     links:
      - "logstash"
     volumes:
