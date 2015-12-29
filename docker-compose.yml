@@ -5,16 +5,16 @@ influxdb_data:
      - /data
 
 
-influxdb:
-    image: daocloud.io/koolay/influxdb:latest
-    expose:
-     - "4444"
-    ports:
-    - "4444:4444"
-    - "8083:8083"
-    - "8086:8086"
-    volumes_from:
-     - influxdb_data
+#influxdb:
+    #image: daocloud.io/koolay/influxdb:latest
+    #expose:
+     #- "4444"
+    #ports:
+    #- "4444:4444"
+    #- "8083:8083"
+    #- "8086:8086"
+    #volumes_from:
+     #- influxdb_data
 
 #telegraf:
     #image: daocloud.io/koolay/telegraf:latest
@@ -23,21 +23,21 @@ influxdb:
     #links:
      #- influxdb
 
-grafana:
-  image: daocloud.io/koolay/grafana:latest
-  links:
-   - influxdb
-  ports:
-   - "3000:3000"
-  environment:
-   - GF_SERVER_ROOT_URL=http://influxdb
-   - GF_SECURITY_ADMIN_PASSWORD=dev
+#grafana:
+  #image: daocloud.io/koolay/grafana:latest
+  #links:
+   #- influxdb
+  #ports:
+   #- "3000:3000"
+  #environment:
+   #- GF_SERVER_ROOT_URL=http://influxdb
+   #- GF_SECURITY_ADMIN_PASSWORD=dev
 
 logstash:
    image: daocloud.io/koolay/logstash:latest
    #image: koolay/logstash
    ports:
-     - "5043:5043"
+     - "5044:5044"
    links:
     - influxdb
    volumes:
