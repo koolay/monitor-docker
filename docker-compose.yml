@@ -13,7 +13,7 @@ influxdb:
     - "4444:4444"
     - "8083:8083"
     - "8086:8086"
-    - "25826:25826"
+    - "25826:25826/udp"
     volumes:
      - ./conf/influxdb/config.toml:/config/config.toml
     volumes_from:
@@ -40,7 +40,7 @@ grafana:
   ports:
    - "3000:3000"
   volumes:
-   - ./grafana-influx-dashboard:/opt/grafana-influx-dashboard
+   - ./grafana-influx-dashboard:/usr/share/grafana/grafana-influx-dashboard
   environment:
    - GF_SERVER_ROOT_URL=http://influxdb
    - GF_SECURITY_ADMIN_PASSWORD=dev
