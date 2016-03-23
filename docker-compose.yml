@@ -19,19 +19,19 @@ influxdb:
     volumes_from:
      - influxdb_data
 
-collectd:
-    image: koolay/collectd:latest
-    volumes:
-     - ./conf/collectd/collectd.conf:/opt/collectd/etc/collectd.conf
-    links:
-     - influxdb
-
-#telegraf:
-    #image: daocloud.io/koolay/telegraf:latest
+#collectd:
+    #image: koolay/collectd:latest
     #volumes:
-     #- ./telegraf.toml:/config/telegraf.toml
+     #- ./conf/collectd/collectd.conf:/opt/collectd/etc/collectd.conf
     #links:
      #- influxdb
+
+telegraf:
+    image: daocloud.io/koolay/telegraf:latest
+    volumes:
+     - ./telegraf.toml:/config/telegraf.toml
+    links:
+     - influxdb
 
 grafana:
   image: daocloud.io/koolay/grafana:latest
@@ -39,27 +39,6 @@ grafana:
    - influxdb
   ports:
    - "3000:3000"
-  volumes:
-   - ./grafana-influx-dashboard:/usr/share/grafana/grafana-influx-dashboard
   environment:
    - GF_SERVER_ROOT_URL=http://influxdb
    - GF_SECURITY_ADMIN_PASSWORD=dev
-
-#logstash:
-   ##image: daocloud.io/koolay/logstash:latest
-   #image: koolay/logstash
-   #ports:
-     #- "5044:5044"
-   ##links:
-    ##- influxdb
-   #volumes:
-    #- ./ssl:/etc/logstash/ssl
-    #- ./conf/logstash:/etc/logstash
-
-#filebeat:
-    #image: daocloud.io/koolay/filebeat:latest
-    #links:
-     #- "logstash"
-    #volumes:
-     #- ./ssl:/etc/ssl
-     #- /data:/data
